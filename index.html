@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portofolio - Andhi Asmara Hadi</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PWA Manifest Injection (Dynamic) -->
+    <script>
+        const manifestJSON = {
+            "name": "Portofolio Andhi",
+            "short_name": "Pak Andhi",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#ffffff",
+            "theme_color": "#4F46E5",
+            "icons": [{ "src": "https://i.imghippo.com/files/KD3907KRQ.png", "sizes": "192x192", "type": "image/png" }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestJSON)], { type: 'application/json' });
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        document.write(`<link rel="manifest" href="${manifestURL}">`);
+    </script>
+
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: #f8fafc;
+            color: #333;
+            overflow: hidden;
+        }
+        #app-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png'), linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+
+        .menu-btn {
+            position: fixed; top: 25px; left: 25px; z-index: 1001;
+            width: 55px; height: 55px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; font-size: 1.5rem; color: #4F46E5;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+        }
+        .menu-btn:hover { transform: scale(1.1); background: #4F46E5; color: white; }
+
+        .nav-overlay {
+            position: fixed; top: 0; left: -100%; width: 320px; height: 100%;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(25px);
+            z-index: 1000; transition: left 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+            display: flex; flex-direction: column; padding-top: 100px;
+            box-shadow: 15px 0 40px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+        .nav-overlay.open { left: 0; }
+        .nav-item {
+            padding: 18px 30px; margin: 8px 20px; border-radius: 15px;
+            cursor: pointer; font-weight: 600; color: #64748b; font-size: 1.1rem;
+            display: flex; align-items: center; gap: 20px; transition: 0.3s;
+        }
+        .nav-item:hover, .nav-item.active { background: #4F46E5; color: white; transform: translateX(10px); }
+        .nav-item i { width: 30px; text-align: center; font-size: 1.3rem; }
+
+        main {
+            width: 100%; max-width: 1400px; height: 100%; overflow-y: auto; overflow-x: hidden;
+            position: relative; scroll-behavior: smooth;
+        }
+        .page {
+            display: none; padding: 80px 40px; min-height: 100%;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .page.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(40px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+
+        .split-layout {
+            display: flex; align-items: center; justify-content: center; gap: 0; width: 100%; flex-wrap: wrap;
+        }
+        .split-layout.reverse { flex-direction: row-reverse; }
+        
+        .content-box { flex: 1; min-width: 320px; z-index: 2; position: relative; }
+        
+        /* Teknik Overlap (Menimpa) */
+        .overlap-left { margin-right: -100px; margin-top: 50px; }
+        .overlap-right { margin-left: -100px; margin-top: 50px; }
+
+        .image-box { flex: 1; min-width: 320px; display: flex; justify-content: center; align-items: center; z-index: 1; position: relative; padding: 20px; }
+        
+        .base-image {
+            width: 100%; max-width: 450px; height: auto; display: block;
+            transition: transform 0.4s ease;
+        }
+        .base-image:hover { transform: scale(1.03); }
+        
+        /* 8 Gaya Bingkai Foto Unik */
+        .frame-style-1 { border-radius: 20px; box-shadow: -20px 20px 0px #4F46E5; border: 2px solid #e2e8f0; } /* Kotak Bayangan Tegas */
+        .frame-style-2 { border-radius: 12px; padding: 15px 15px 60px 15px; background: white; box-shadow: 0 15px 35px rgba(0,0,0,0.15); transform: rotate(-3deg); } /* Kartu Polaroid */
+        .frame-style-3 { border-radius: 40px 120px 40px 120px; box-shadow: 15px 15px 30px rgba(79,70,229,0.15); border: 8px solid white; } /* Daun Asimetris */
+        .frame-style-4 { border-radius: 30px; border: 15px solid rgba(255,255,255,0.7); box-shadow: 0 20px 40px rgba(0,0,0,0.1); backdrop-filter: blur(10px); } /* Kaca Tebal */
+        .frame-style-5 { border-radius: 20px; border: 4px dashed #4F46E5; padding: 12px; background: rgba(255,255,255,0.6); } /* Garis Putus-putus */
+        .frame-style-6 { border-radius: 25px; box-shadow: 20px -20px 0px rgba(79,70,229,0.2); border: 2px solid white; } /* Offset Kanan Atas */
+        .frame-style-7 { border-radius: 10px; border-left: 15px solid #4F46E5; border-bottom: 15px solid #4F46E5; box-shadow: 10px 10px 25px rgba(0,0,0,0.1); } /* Aksen Sudut */
+        .frame-style-8 { border-radius: 50px 15px 50px 15px; border: 6px solid white; box-shadow: 0 15px 30px rgba(79, 70, 229, 0.25); } /* Lengkung Unik */
+
+        .title { font-size: 4rem; font-weight: 800; color: #1e293b; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px; }
+        .subtitle { font-size: 1.3rem; color: #64748b; margin-bottom: 25px; font-weight: 400; }
+        .accent-text { color: #4F46E5; }
+        
+        .callout {
+            position: relative; padding: 25px 30px; border-radius: 20px;
+            background: rgba(255,255,255,0.85); border-left: 6px solid #4F46E5;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); font-style: italic; color: #475569;
+            margin-top: 30px; font-size: 1.1rem; line-height: 1.6;
+        }
+
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; width: 100%; margin-top: 30px; }
+        .card { padding: 35px; border-radius: 25px; text-align: center; transition: 0.3s; z-index: 2; position: relative;}
+        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15); }
+        .card i { font-size: 3.5rem; color: #4F46E5; margin-bottom: 20px; }
+
+        .agreement-list { list-style: none; padding: 0; width: 100%; display: flex; flex-direction: column; gap: 15px; }
+        .agreement-item { display: flex; align-items: center; gap: 25px; padding: 25px 30px; border-radius: 20px; transition: 0.3s; }
+        .agreement-item:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .agreement-item i { font-size: 2.8rem; color: #4F46E5; width: 60px; text-align: center; }
+
+        .contact-list { display: flex; flex-direction: column; gap: 20px; font-size: 1.4rem; font-weight: 500; }
+        .contact-item { display: flex; align-items: center; gap: 25px; padding: 20px 35px; border-radius: 50px; transition: 0.4s; color: #334155; }
+        .contact-item i { font-size: 2.5rem; color: #4F46E5; transition: 0.4s;}
+        .contact-item:hover { background: #4F46E5; color: white; transform: translateX(15px); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.3); }
+        .contact-item:hover i { color: white; transform: scale(1.2); }
+
+        .page-nav-btn {
+            position: fixed; top: 50%; transform: translateY(-50%); z-index: 1001;
+            width: 60px; height: 60px; border-radius: 50%; border: none;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); color: #4F46E5;
+            font-size: 1.8rem; cursor: pointer; display: flex;
+            justify-content: center; align-items: center; transition: 0.3s;
+        }
+        .page-nav-btn:hover { background: #4F46E5; color: white; transform: translateY(-50%) scale(1.1); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.4); }
+        #prevBtn { left: 20px; }
+        #nextBtn { right: 20px; }
+
+        .page { display: none; padding: 80px 40px; min-height: 100%; }
+        .page.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        .slide-in-right { animation: slideInRight 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .slide-in-left { animation: slideInLeft 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .fade-in { animation: fadeIn 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        
+        @keyframes slideInRight { 0% { opacity: 0; transform: translateX(150px) scale(0.95); } 100% { opacity: 1; transform: translateX(0) scale(1); } }
+        @keyframes slideInLeft { 0% { opacity: 0; transform: translateX(-150px) scale(0.95); } 100% { opacity: 1; transform: translateX(0) scale(1); } }
+        @keyframes fadeIn { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+
+        @media (max-width: 992px) {
+            .split-layout, .split-layout.reverse { flex-direction: column; text-align: center; gap: 30px; }
+            .overlap-left, .overlap-right { margin: 0; margin-top: -60px; padding: 30px !important; }
+            .title { font-size: 2.8rem; }
+            .blob-frame { width: 320px; height: 320px; }
+            .nav-overlay { width: 280px; }
+            .page { padding: 80px 20px 80px 20px; }
+            .contact-item { font-size: 1.1rem; padding: 15px 20px; }
+            .contact-item i { font-size: 2rem; }
+            
+            /* Posisi tombol navigasi dipindah ke bawah untuk HP */
+            .page-nav-btn { top: auto; bottom: 20px; transform: none; width: 55px; height: 55px; font-size: 1.5rem; }
+            .page-nav-btn:hover { transform: scale(1.1); }
+            #prevBtn { left: 20px; }
+            #nextBtn { right: 20px; }
+        }
+    </style>
+
+    <!-- Firebase SDK (Compat Version for standalone file) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div id="app-container">
+    <div class="menu-btn glass" onclick="toggleMenu()" title="Buka Menu">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <button id="prevBtn" class="page-nav-btn" style="display: none;" onclick="navigate(-1)" title="Halaman Sebelumnya"><i class="fas fa-chevron-left"></i></button>
+    <button id="nextBtn" class="page-nav-btn" onclick="navigate(1)" title="Halaman Selanjutnya"><i class="fas fa-chevron-right"></i></button>
+
+    <main>
+        <!-- Halaman 1: Beranda -->
+        <section id="beranda" class="page active fade-in">
+            <div class="split-layout reverse">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/KD3907KRQ.png" alt="Sapaan" class="base-image frame-style-1">
+                </div>
+                <div class="content-box overlap-right glass" style="padding: 50px; border-radius: 40px;">
+                    <h1 class="title">Halo!<br><span class="accent-text">Selamat Datang</span> 👋</h1>
+                    <p class="subtitle">Senang bertemu dengan kalian di Kelas TIK tahun ajaran ini.</p>
+                    <div class="callout">
+                        "Pendidikan adalah senjata paling mematikan di dunia, karena dengan pendidikan, Anda dapat mengubah dunia." <br><strong>- Nelson Mandela</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman 2: Profil -->
+        <section id="profil" class="page">
+            <div class="split-layout">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/kwvJ2033JA.png" alt="Profil" class="base-image frame-style-2">
+                </div>
+                <div class="content-box overlap-left glass" style="padding: 50px; border-radius: 40px;">
+                    <h1 class="title">Andhi Asmara Hadi</h1>
+                    <p class="subtitle">Guru TIK / Informatika Anda</p>
+                    <div class="callout">
+                        "Guru yang baik itu bagaikan lilin; ia menghabiskan dirinya sendiri untuk menerangi jalan bagi murid-muridnya."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman 3: Tempat Tanggal Lahir -->
+        <section id="ttl" class="page">
+            <div class="split-layout reverse">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/Up9815GBE.jpg" alt="Tempat Tanggal Lahir" class="base-image frame-style-3">
+                </div>
+                <div class="content-box overlap-right glass" style="padding: 50px; border-radius: 40px;">
+                    <p class="subtitle" style="text-transform: uppercase; letter-spacing: 2px;">Tempat & Tanggal Lahir</p>
+                    <h1 class="title" style="font-size: 5rem; line-height: 1;">Denpasar,<br><span class="accent-text">2 Juni 1986</span></h1>
+                    <div class="callout" style="margin-top: 40px;">
+                        "Setiap hari adalah lembaran baru. Waktu terus berjalan, buatlah setiap detiknya bermakna untuk mengukir sejarahmu sendiri."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman 4: Tugas Pokok -->
+        <section id="tugaspokok" class="page">
+            <div class="split-layout reverse">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/siM1301YUg.jpg" alt="Tugas Pokok" class="base-image frame-style-4">
+                </div>
+                <div class="content-box overlap-right glass" style="padding: 50px; border-radius: 40px;">
+                    <h1 class="title">Tugas Pokok 👨‍🏫</h1>
+                    <p class="subtitle" style="font-size:1.6rem; color:#1e293b; font-weight:700;">Mengajar TIK Kelas 9</p>
+                    <p style="font-size: 1.2rem; color: #475569;">Mendampingi siswa-siswi sejak tahun <strong style="color: #4F46E5;">2010 hingga sekarang</strong>.</p>
+                    <div class="callout">
+                        "Teknologi hanyalah alat. Dalam hal membuat siswa bekerja sama dan memotivasi mereka, guru adalah yang paling penting." <br><strong>- Bill Gates</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman 5: Tugas Tambahan (Layout Baru dengan Foto) -->
+        <section id="tugastambahan" class="page">
+            <div style="text-align: center; margin-bottom: 20px; z-index: 2; position: relative; width:100%;">
+                <h1 class="title">Tugas Tambahan 🏢</h1>
+                <p class="subtitle">Amanah lain di luar jam mengajar</p>
+            </div>
+            
+            <div class="split-layout">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/SET2537Eo.jpg" alt="Tugas Tambahan" class="base-image frame-style-5">
+                </div>
+                <div class="content-box overlap-left">
+                    <div class="card-grid" style="grid-template-columns: 1fr; gap: 15px; margin-top: 0;">
+                        <div class="card glass" style="padding: 25px; display: flex; align-items: center; gap: 20px; text-align: left;">
+                            <i class="fas fa-users-cog" style="margin: 0; font-size: 2.5rem;"></i>
+                            <div>
+                                <h2 style="margin:0; font-size:1.4rem;">Ketua MGMP</h2>
+                                <p style="margin:5px 0 0 0; color: #64748b;">Informatika SMP Kab. Klungkung</p>
+                            </div>
+                        </div>
+                        <div class="card glass" style="padding: 25px; display: flex; align-items: center; gap: 20px; text-align: left;">
+                            <i class="fas fa-laptop-code" style="margin: 0; font-size: 2.5rem;"></i>
+                            <div>
+                                <h2 style="margin:0; font-size:1.4rem;">Koord. Dapodik</h2>
+                                <p style="margin:5px 0 0 0; color: #64748b;">Operator Pendataan Kec. Dawan</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="callout glass" style="margin-top: 30px;">
+                        "Kepemimpinan bukanlah tentang gelar atau posisi. Ini tentang satu kehidupan yang memengaruhi kehidupan lain secara positif."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman 6: Materi -->
+        <section id="materi" class="page">
+            <div class="split-layout reverse">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/XGl8045qAw.JPG" alt="Materi" class="base-image frame-style-6">
+                </div>
+                <div class="content-box overlap-right">
+                    <h1 class="title">Materi 1 Semester 📚</h1>
+                    <div class="card-grid" style="grid-template-columns: 1fr; gap: 15px;">
+                        <div class="card glass" style="display: flex; align-items: center; gap: 25px; padding: 20px 40px; text-align: left;">
+                            <i class="fas fa-table" style="margin: 0; font-size: 2.5rem;"></i>
+                            <div><strong style="font-size: 1.3rem;">Basis Data</strong><br><span style="color:#64748b;">Google Spreadsheet</span></div>
+                        </div>
+                        <div class="card glass" style="display: flex; align-items: center; gap: 25px; padding: 20px 40px; text-align: left;">
+                            <i class="fas fa-puzzle-piece" style="margin: 0; font-size: 2.5rem;"></i>
+                            <div><strong style="font-size: 1.3rem;">Pemrograman Blok</strong><br><span style="color:#64748b;">Scratch</span></div>
+                        </div>
+                        <div class="card glass" style="display: flex; align-items: center; gap: 25px; padding: 20px 40px; text-align: left;">
+                            <i class="fas fa-palette" style="margin: 0; font-size: 2.5rem;"></i>
+                            <div><strong style="font-size: 1.3rem;">Desain Visual</strong><br><span style="color:#64748b;">Canva</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman 7: Kesepakatan -->
+        <section id="kesepakatan" class="page">
+            <div style="text-align: center; margin-bottom: 20px; z-index: 2; position: relative;">
+                <h1 class="title">Kesepakatan Lab TIK 🤝</h1>
+                <p class="subtitle">Tata tertib untuk kenyamanan bersama</p>
+            </div>
+            
+            <div class="split-layout">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/ppMa8013Lmo.jpg" alt="Kesepakatan" class="base-image frame-style-7">
+                </div>
+                <div class="content-box overlap-left">
+                    <ul class="agreement-list" style="width: 100%;">
+                        <li class="agreement-item glass">
+                            <i class="fas fa-hamburger"></i>
+                            <div>
+                                <strong style="font-size: 1.3rem; color:#1e293b;">Dilarang Membawa Makanan/Minuman</strong>
+                                <p style="margin: 5px 0 0 0; color:#475569;">Agar perangkat keras aman dari tumpahan.</p>
+                            </div>
+                        </li>
+                        <li class="agreement-item glass">
+                            <i class="fas fa-broom"></i>
+                            <div>
+                                <strong style="font-size: 1.3rem; color:#1e293b;">Jaga Kebersihan & Fasilitas</strong>
+                                <p style="margin: 5px 0 0 0; color:#475569;">Gunakan alat lab dengan kelembutan.</p>
+                            </div>
+                        </li>
+                        <li class="agreement-item glass">
+                            <i class="fas fa-power-off"></i>
+                            <div>
+                                <strong style="font-size: 1.3rem; color:#1e293b;">Matikan Sesuai Prosedur</strong>
+                                <p style="margin: 5px 0 0 0; color:#475569;">Pastikan melakukan "Shut Down" secara sistem.</p>
+                            </div>
+                        </li>
+                        <li class="agreement-item glass">
+                            <i class="fas fa-globe"></i>
+                            <div>
+                                <strong style="font-size: 1.3rem; color:#1e293b;">Gunakan Internet Bijak</strong>
+                                <p style="margin: 5px 0 0 0; color:#475569;">Akses internet hanya untuk mencari referensi tugas.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="callout glass" style="max-width: 900px; margin: 40px auto 0; text-align: center;">
+                "Disiplin yang ditanamkan sejak dini adalah jembatan penghubung antara cita-cita dan pencapaian nyata."
+            </div>
+        </section>
+
+        <!-- Halaman 8: Kontak -->
+        <section id="kontak" class="page">
+            <div class="split-layout reverse">
+                <div class="image-box">
+                    <img src="https://i.imghippo.com/files/ga7926C.jpg" alt="Kontak" class="base-image frame-style-8">
+                </div>
+                <div class="content-box overlap-right" style="display: flex; flex-direction: column; justify-content: center; z-index: 3;">
+                    <h1 class="title" style="margin-bottom: 40px;">Hubungi<br><span class="accent-text">Saya</span></h1>
+                    <div class="contact-list">
+                        <!-- Format: Ikon langsung diikuti datanya -->
+                        <div class="contact-item glass">
+                            <i class="fas fa-map-marker-alt"></i> Br. Kacagan - Ketewel - Sukawati - Gianyar
+                        </div>
+                        <div class="contact-item glass">
+                            <i class="fab fa-whatsapp"></i> 085935163279
+                        </div>
+                        <div class="contact-item glass">
+                            <i class="fab fa-instagram"></i> @andhiasmarahadist
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Menu Tersembunyi (Hamburger Overlay) -->
+    <nav id="nav-menu" class="nav-overlay glass">
+        <div class="nav-item active" onclick="switchPage('beranda', this)"><i class="fas fa-home"></i> Beranda</div>
+        <div class="nav-item" onclick="switchPage('profil', this)"><i class="fas fa-user"></i> Profil</div>
+        <div class="nav-item" onclick="switchPage('ttl', this)"><i class="fas fa-map-marker-alt"></i> Tempat & Tgl Lahir</div>
+        <div class="nav-item" onclick="switchPage('tugaspokok', this)"><i class="fas fa-chalkboard-teacher"></i> Tugas Pokok</div>
+        <div class="nav-item" onclick="switchPage('tugastambahan', this)"><i class="fas fa-briefcase"></i> Tugas Tambahan</div>
+        <div class="nav-item" onclick="switchPage('materi', this)"><i class="fas fa-book"></i> Materi</div>
+        <div class="nav-item" onclick="switchPage('kesepakatan', this)"><i class="fas fa-handshake"></i> Kesepakatan</div>
+        <div class="nav-item" onclick="switchPage('kontak', this)"><i class="fas fa-phone-alt"></i> Kontak</div>
+    </nav>
+
+<script>
+    const IS_PREVIEW = true; // Set ke FALSE jika sudah mengisi config Firebase di bawah
+
+    const firebaseConfig = {
+        apiKey: "API_KEY_ANDA",
+        authDomain: "PROJECT_ID.firebaseapp.com",
+        projectId: "PROJECT_ID",
+        storageBucket: "PROJECT_ID.appspot.com",
+        messagingSenderId: "SENDER_ID",
+        appId: "APP_ID"
+    };
+
+    let db;
+
+    // Inisialisasi Firebase jika bukan mode preview
+    if (!IS_PREVIEW) {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        autoSetupDatabase();
+    } else {
+        console.log("Menjalankan dalam MODE PREVIEW. Firebase dinonaktifkan.");
+    }
+
+    function toggleMenu() {
+        const nav = document.getElementById('nav-menu');
+        const icon = document.querySelector('.menu-btn i');
+        
+        if (!nav) return; // Mencegah error jika HTML menu tidak ditemukan
+        
+        if (nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        } else {
+            nav.classList.add('open');
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        }
+    }
+
+    const pageOrder = ['beranda', 'profil', 'ttl', 'tugaspokok', 'tugastambahan', 'materi', 'kesepakatan', 'kontak'];
+    let currentPageIndex = 0;
+
+    function navigate(direction) {
+        const newIndex = currentPageIndex + direction;
+        if (newIndex >= 0 && newIndex < pageOrder.length) {
+            const targetId = pageOrder[newIndex];
+            const targetNav = document.querySelector(`.nav-item[onclick*="${targetId}"]`);
+            switchPage(targetId, targetNav, direction);
+        }
+    }
+
+    function switchPage(pageId, navElement, direction = 1) {
+        currentPageIndex = pageOrder.indexOf(pageId);
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        if(prevBtn && nextBtn) {
+            prevBtn.style.display = currentPageIndex === 0 ? 'none' : 'flex';
+            nextBtn.style.display = currentPageIndex === pageOrder.length - 1 ? 'none' : 'flex';
+        }
+
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active', 'slide-in-right', 'slide-in-left', 'fade-in');
+        });
+        
+        const targetPage = document.getElementById(pageId);
+        
+        // Trik khusus agar browser mereset animasi CSS setiap kali ganti halaman
+        void targetPage.offsetWidth; 
+
+        targetPage.classList.add('active');
+        
+        if (direction > 0) {
+            targetPage.classList.add('slide-in-right');
+        } else if (direction < 0) {
+            targetPage.classList.add('slide-in-left');
+        } else {
+            targetPage.classList.add('fade-in'); // Muncul pudar jika via klik menu bar
+        }
+
+        document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
+        });
+        if(navElement) navElement.classList.add('active');
+        
+        // Scroll ke posisi atas saat pindah halaman
+        document.querySelector('main').scrollTo(0, 0);
+        
+        // Tutup menu overlay jika sedang terbuka
+        const navMenu = document.getElementById('nav-menu');
+        if(navMenu && navMenu.classList.contains('open')) {
+            toggleMenu();
+        }
+    }
+
+    async function autoSetupDatabase() {
+        try {
+            // Karena form persetujuan dihapus, kita memanfaatkan fungsi autoSetupDatabase 
+            // ini untuk mencatat log kunjungan pengunjung secara otomatis ke Firestore.
+            await db.collection("visitor_logs").add({
+                waktu: firebase.firestore.FieldValue.serverTimestamp(),
+                tipe: "Kunjungan Portofolio (Tanpa Login)"
+            });
+            console.log("Firebase Auto-Setup: Log kunjungan berhasil dicatat.");
+        } catch (error) {
+            console.error("Firebase Log Gagal:", error);
+        }
+    }
+
+    async function simpanKesepakatan() {
+        const namaInput = document.getElementById('namaSiswa').value;
+        const btn = document.getElementById('btnSetuju');
+        const msg = document.getElementById('msgSetuju');
+
+        if(namaInput.trim() === "") {
+            alert("Tolong isi namamu terlebih dahulu ya!");
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerText = "Menyimpan...";
+
+        if(IS_PREVIEW) {
+            // Simulasi jika mode preview
+            setTimeout(() => {
+                btn.style.display = 'none';
+                msg.style.display = 'block';
+            }, 1000);
+            return;
+        }
+
+        try {
+            // Simpan ke Firestore
+            await db.collection("kesepakatan_lab").add({
+                nama: namaInput,
+                waktu: firebase.firestore.FieldValue.serverTimestamp(),
+                setuju: true
+            });
+            btn.style.display = 'none';
+            msg.style.display = 'block';
+        } catch (error) {
+            alert("Gagal menyimpan persetujuan. Pastikan internet aktif.");
+            btn.disabled = false;
+            btn.innerText = "Saya Setuju & Paham";
+        }
+    }
+
+    // ==========================================
+    // 4. SERVICE WORKER PWA (GENERATED DYNAMICALLY)
+    // ==========================================
+    const swCode = `
+        self.addEventListener('install', (e) => {
+            console.log('[Service Worker] Install');
+        });
+        self.addEventListener('fetch', (e) => {
+            // Passthrough fetch (Offline caching bisa ditambahkan di sini nanti)
+        });
+    `;
+    const swBlob = new Blob([swCode], {type: 'application/javascript'});
+    const swUrl = URL.createObjectURL(swBlob);
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register(swUrl).then(registration => {
+                console.log('PWA ServiceWorker berhasil didaftarkan.');
+            }).catch(error => {
+                console.log('PWA ServiceWorker gagal:', error);
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
