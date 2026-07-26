@@ -127,7 +127,7 @@
 
         /* Area Foto */
         .image-box { 
-            flex: 0.8; width: 100%; max-width: 450px; display: flex; 
+            flex: 1; width: 100%; max-width: 450px; display: flex; 
             justify-content: center; align-items: center; z-index: 1; margin: 0 auto;
         }
         
@@ -136,28 +136,82 @@
         .float-anim { animation: floating 6s ease-in-out infinite; }
 
         .base-image {
-            width: 100%; height: auto; display: block; object-fit: contain;
+            width: 100%; height: auto; display: block; 
+            object-fit: cover; /* Memastikan foto tidak pernah gepeng/stretching */
             transition: all 0.5s ease;
         }
 
-        /* === 8 VARIASI FRAME FOTO YANG UNIK & KEREN === */
-        /* Frame 1: Soft Glow & Rounded */
-        .frame-style-1 { border-radius: 30px; box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2); }
-        /* Frame 2: Asymmetric Blob dengan Border Putih Tebal */
-        .frame-style-2 { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; border: 10px solid white; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        /* Frame 3: Gaya Polaroid Miring */
-        .frame-style-3 { border-radius: 8px; padding: 15px 15px 70px 15px; background: white; box-shadow: 0 20px 40px rgba(0,0,0,0.12); transform: rotate(-3deg); }
-        /* Frame 4: Offset Shadow Solid Warna Aksen */
-        .frame-style-4 { border-radius: 20px; border: 4px solid white; box-shadow: -20px 20px 0px #4F46E5; }
-        /* Frame 5: Dashed/Garis Putus-putus Modern */
-        .frame-style-5 { border-radius: 40px; outline: 4px dashed #4F46E5; outline-offset: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        /* Frame 6: Geometric Sharp / Segi Banyak */
-        .frame-style-6 { clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0% 95%); border-radius: 10px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        /* Frame 7: Dual Tone Border (Tebal Bawah & Kanan) */
-        .frame-style-7 { border-radius: 15px; border-bottom: 15px solid #4F46E5; border-right: 15px solid #3b82f6; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        /* Frame 8: Circle / Lingkaran Sempurna dengan Cincin */
-        .frame-style-8 { border-radius: 50%; padding: 8px; background: linear-gradient(135deg, #4F46E5, #3b82f6); box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3); }
-        .frame-style-8 img { border-radius: 50%; }
+        /* === 7 VARIASI FRAME FUTURISTIK & KEKINIAN (HITS SAAT INI) === */
+        
+        /* Frame 1: Neon Tech Glow (Gradasi Bergerak) */
+        @keyframes gradientGlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .frame-modern-1 {
+            position: relative; padding: 6px; border-radius: 35px;
+            background: linear-gradient(135deg, #4F46E5, #06b6d4, #e81cff, #4F46E5);
+            background-size: 300% 300%; animation: gradientGlow 4s ease infinite;
+            box-shadow: 0 20px 50px rgba(79, 70, 229, 0.4);
+        }
+        .frame-modern-1 .base-image { border-radius: 30px; background: white; }
+
+        /* Frame 2: Floating Glassmorphism (Kaca Buram Melayang ala Apple UI) */
+        .frame-modern-2 {
+            position: relative; padding: 18px; background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.6); border-radius: 30px; 
+            box-shadow: 0 25px 45px rgba(0,0,0,0.1), inset 0 0 20px rgba(255,255,255,0.5);
+        }
+        .frame-modern-2 .base-image { border-radius: 16px; }
+
+        /* Frame 3: Neo-Brutalism (Desain Web Editorial Paling Tren) */
+        .frame-modern-3 {
+            position: relative; border-radius: 16px; border: 3px solid #0f172a;
+            box-shadow: 12px 12px 0 #4F46E5; transition: all 0.3s ease;
+            background: white; padding: 5px;
+        }
+        .frame-modern-3:hover { transform: translate(5px, 5px); box-shadow: 7px 7px 0 #4F46E5; }
+        .frame-modern-3 .base-image { border-radius: 12px; }
+
+        /* Frame 4: Cyber-Tech Scanner (Garis Siku Melayang) */
+        .frame-modern-4 { position: relative; padding: 10px; }
+        .frame-modern-4::before, .frame-modern-4::after {
+            content: ''; position: absolute; width: 50px; height: 50px;
+            border: 4px solid #4F46E5; z-index: 5; transition: all 0.4s ease;
+        }
+        .frame-modern-4::before { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 15px 0 0 0; }
+        .frame-modern-4::after { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 15px 0; }
+        .frame-modern-4:hover::before { top: -10px; left: -10px; width: 65px; height: 65px; border-color: #06b6d4; }
+        .frame-modern-4:hover::after { bottom: -10px; right: -10px; width: 65px; height: 65px; border-color: #06b6d4; }
+        .frame-modern-4 .base-image { border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+
+        /* Frame 5: Clean Bento Card (Bersih & Elegan) */
+        .frame-modern-5 {
+            border-radius: 40px; padding: 10px; background: white;
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08); border: 1px solid #f1f5f9;
+        }
+        .frame-modern-5 .base-image { border-radius: 32px; }
+
+        /* Frame 6: Cyberpunk Polygon Cut (Potongan Sudut Futuristik) */
+        .frame-modern-6-wrapper { filter: drop-shadow(0 20px 25px rgba(79, 70, 229, 0.3)); }
+        .frame-modern-6 {
+            clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+            background: white; padding: 8px;
+        }
+        .frame-modern-6 .base-image { clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%); }
+
+        /* Frame 7: Holographic Pulse Ring (Cincin Gradasi Berputar) */
+        @keyframes spinRing { 100% { transform: rotate(360deg); } }
+        .frame-modern-7 {
+            border-radius: 50%; padding: 8px; position: relative;
+            background: conic-gradient(from 0deg, #4F46E5, #06b6d4, #e81cff, #4F46E5);
+            animation: spinRing 5s linear infinite;
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.4);
+            width: 300px; height: 300px; /* Ukuran pas untuk foto avatar bulat */
+            display: flex; justify-content: center; align-items: center;
+        }
+        .frame-modern-7 .base-image { 
+            border-radius: 50%; border: 6px solid white; 
+            width: 100%; height: 100%; object-fit: cover; 
+        }
 
         .title { font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 800; color: #0f172a; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px; }
         .subtitle { font-size: clamp(1rem, 2vw, 1.25rem); color: #475569; margin-bottom: 30px; font-weight: 400; line-height: 1.7; }
@@ -247,189 +301,147 @@
 
     <main id="main-content">
         <section class="page active" id="page-0">
-            <div class="split-layout"> <!-- Normal: Teks Kiri, Gambar Kanan -->
+            <div class="split-layout"> 
                 <div class="content-box">
                     <h1 class="title">Halo! <br><span class="accent-text">Selamat Datang 👋</span></h1>
                     <p class="subtitle">Senang bertemu dengan kalian di Kelas TIK tahun ajaran ini. Mari belajar teknologi dengan menyenangkan!</p>
-                    <div class="callout">
-                        "Pendidikan adalah senjata paling mematikan di dunia, karena dengan pendidikan, Anda dapat mengubah dunia."<br><strong>- Nelson Mandela</strong>
-                    </div>
+                    <div class="callout">"Pendidikan adalah senjata paling mematikan di dunia, karena dengan pendidikan, Anda dapat mengubah dunia."<br><strong>- Nelson Mandela</strong></div>
                 </div>
                 <div class="image-box float-anim">
-                    <img src="https://i.imghippo.com/files/KD3907KRQ.png" alt="Sapaan" class="base-image frame-style-1">
+                    <div class="frame-modern-1">
+                        <img src="https://i.imghippo.com/files/KD3907KRQ.png" alt="Sapaan" class="base-image">
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="page" id="page-1">
-            <div class="split-layout reverse mobile-reverse"> <!-- Reverse: Gambar Kiri, Teks Kanan -->
+            <div class="split-layout reverse"> 
                 <div class="content-box box-style-2">
                     <p class="subtitle" style="margin-bottom: 10px;">Perkenalkan, nama saya</p>
                     <h1 class="title accent-text">Andhi Asmara Hadi</h1>
                     <p class="subtitle" style="margin-top:-10px; font-weight:600;">Guru Informatika Kalian.</p>
-                    <div class="callout">
-                        "Tidak ada kata terlambat untuk belajar. Teknologi berkembang setiap detik, begitu pula dengan pengetahuan kita."
-                    </div>
+                    <div class="callout">"Tidak ada kata terlambat untuk belajar. Teknologi berkembang setiap detik, begitu pula dengan pengetahuan kita."</div>
                 </div>
                 <div class="image-box float-anim" style="animation-delay: 1s;">
-                    <img src="https://i.imghippo.com/files/kwvJ2033JA.png" alt="Profil Andhi" class="base-image frame-style-2">
+                    <div class="frame-modern-2">
+                        <img src="https://i.imghippo.com/files/kwvJ2033JA.png" alt="Profil Andhi" class="base-image">
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="page" id="page-2">
-            <div class="split-layout"> <!-- Normal -->
+            <div class="split-layout"> 
                 <div class="content-box">
                     <h1 class="title">Tempat & <br><span class="accent-text">Tanggal Lahir</span></h1>
-                    
                     <div class="list-box">
-                        <div class="list-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <strong style="font-size: 1.1rem; color: #1e293b;">Denpasar</strong><br>
-                                <span style="color:#64748b;">Tempat Kelahiran</span>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <div>
-                                <strong style="font-size: 1.1rem; color: #1e293b;">2 Juni 1986</strong><br>
-                                <span style="color:#64748b;">Tanggal Lahir</span>
-                            </div>
-                        </div>
+                        <div class="list-item"><i class="fas fa-map-marker-alt"></i><div><strong style="font-size: 1.1rem; color: #1e293b;">Denpasar</strong><br><span style="color:#64748b;">Tempat Kelahiran</span></div></div>
+                        <div class="list-item"><i class="fas fa-calendar-alt"></i><div><strong style="font-size: 1.1rem; color: #1e293b;">2 Juni 1986</strong><br><span style="color:#64748b;">Tanggal Lahir</span></div></div>
                     </div>
-                    
-                    <div class="callout">
-                        "Setiap hari adalah lembaran baru. Mari isi lembaran tersebut dengan ilmu yang bermanfaat."
-                    </div>
+                    <div class="callout">"Setiap hari adalah lembaran baru. Mari isi lembaran tersebut dengan ilmu yang bermanfaat."</div>
                 </div>
                 <div class="image-box float-anim" style="animation-delay: 0.5s;">
-                    <img src="https://i.imghippo.com/files/Up9815GBE.jpg" alt="Data Diri" class="base-image frame-style-3">
+                    <div class="frame-modern-3">
+                        <img src="https://i.imghippo.com/files/Up9815GBE.jpg" alt="Data Diri" class="base-image">
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="page" id="page-3">
-            <div class="split-layout reverse mobile-reverse"> <!-- Reverse -->
+            <div class="split-layout reverse"> 
                 <div class="content-box box-style-3">
                     <h1 class="title">Tugas <span class="accent-text">Utama</span></h1>
                     <p class="subtitle">Berdedikasi untuk dunia pendidikan teknologi dan pengembangan generasi digital.</p>
-                    
                     <div class="list-item" style="margin-top: 15px;">
                         <i class="fas fa-chalkboard-teacher" style="font-size:2.5rem;"></i>
-                        <div>
-                            <strong style="font-size:1.2rem; color: #1e293b;">Guru TIK Kelas 9</strong><br>
-                            <span style="color:#4F46E5; font-weight:600;">Tahun 2010 - Sekarang</span>
-                        </div>
+                        <div><strong style="font-size:1.2rem; color: #1e293b;">Guru TIK Kelas 9</strong><br><span style="color:#4F46E5; font-weight:600;">Tahun 2010 - Sekarang</span></div>
                     </div>
-
-                    <div class="callout">
-                        "Guru yang baik itu seperti lilin - ia menghabiskan dirinya sendiri untuk menerangi jalan bagi orang lain."
-                    </div>
+                    <div class="callout">"Guru yang baik itu seperti lilin - ia menghabiskan dirinya sendiri untuk menerangi jalan bagi orang lain."</div>
                 </div>
                 <div class="image-box float-anim" style="animation-delay: 1.5s;">
-                    <img src="https://i.imghippo.com/files/siM1301YUg.jpg" alt="Tugas Utama" class="base-image frame-style-4">
+                    <div class="frame-modern-4">
+                        <img src="https://i.imghippo.com/files/siM1301YUg.jpg" alt="Tugas Utama" class="base-image">
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="page" id="page-4">
-            <div class="split-layout"> <!-- Normal -->
+            <div class="split-layout"> 
                 <div class="content-box">
                     <h1 class="title">Tugas <span class="accent-text">Tambahan</span></h1>
-                    <p class="subtitle">Selain mengajar, saya juga aktif berkontribusi dalam pengembangan organisasi dan sistem pendataan sekolah.</p>
-                    
+                    <p class="subtitle">Selain mengajar, saya juga aktif berkontribusi dalam pengembangan sistem sekolah.</p>
                     <div class="list-box">
-                        <div class="list-item">
-                            <i class="fas fa-users-cog"></i>
-                            <div>
-                                <strong style="color: #1e293b;">Ketua MGMP INFORMATIKA</strong><br>
-                                <span style="color:#64748b;">SMP Kabupaten Klungkung</span>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <i class="fas fa-server"></i>
-                            <div>
-                                <strong style="color: #1e293b;">Koordinator Operator Dapodik</strong><br>
-                                <span style="color:#64748b;">& Pendataan Kecamatan Dawan</span>
-                            </div>
-                        </div>
+                        <div class="list-item"><i class="fas fa-users-cog"></i><div><strong style="color: #1e293b;">Ketua MGMP INFORMATIKA</strong><br><span style="color:#64748b;">SMP Kabupaten Klungkung</span></div></div>
+                        <div class="list-item"><i class="fas fa-server"></i><div><strong style="color: #1e293b;">Koordinator Operator Dapodik</strong><br><span style="color:#64748b;">& Pendataan Kecamatan Dawan</span></div></div>
                     </div>
                 </div>
                 <div class="image-box float-anim">
-                    <img src="https://i.imghippo.com/files/SET2537Eo.jpg" alt="Tugas Tambahan" class="base-image frame-style-5">
+                    <div class="frame-modern-5">
+                        <img src="https://i.imghippo.com/files/SET2537Eo.jpg" alt="Tugas Tambahan" class="base-image">
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="page" id="page-5">
-            <div class="split-layout reverse mobile-reverse"> <!-- Reverse -->
+            <div class="split-layout reverse"> 
                 <div class="content-box box-style-2">
                     <h1 class="title">Materi <span class="accent-text">1 Semester</span></h1>
                     <p class="subtitle">Topik seru yang akan kita pelajari bersama-sama:</p>
-                    
                     <div class="list-box">
                         <div class="list-item"><i class="fas fa-table"></i> <div><b>Basis Data</b><br><span style="font-size:0.9rem; color:#64748b;">Google Spreadsheet</span></div></div>
                         <div class="list-item"><i class="fas fa-puzzle-piece"></i> <div><b>Pemrograman Blok</b><br><span style="font-size:0.9rem; color:#64748b;">Scratch</span></div></div>
                         <div class="list-item"><i class="fas fa-paint-brush"></i> <div><b>Desain Visual</b><br><span style="font-size:0.9rem; color:#64748b;">Canva</span></div></div>
                     </div>
-                    
-                    <div class="callout">
-                        "Kreativitas adalah kecerdasan yang bersenang-senang." - <strong>Albert Einstein</strong>
-                    </div>
+                    <div class="callout">"Kreativitas adalah kecerdasan yang bersenang-senang." - <strong>Albert Einstein</strong></div>
                 </div>
                 <div class="image-box float-anim" style="animation-delay: 0.8s;">
-                    <!-- Gambar Diperbarui Sesuai Request Terbaru -->
-                    <img src="https://i.imghippo.com/files/XGl8045qAw.JPG" alt="Materi" class="base-image frame-style-6">
+                    <div class="frame-modern-6-wrapper">
+                        <div class="frame-modern-6">
+                            <img src="https://i.imghippo.com/files/XGl8045qAw.JPG" alt="Materi" class="base-image">
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="page" id="page-6">
-            <div class="split-layout"> <!-- Normal -->
+            <div class="split-layout"> 
                 <div class="content-box box-style-3">
                     <h1 class="title">Kesepakatan <span class="accent-text">Belajar</span></h1>
-                    <p class="subtitle">Aturan penting saat berada di dalam Lab TIK untuk kenyamanan bersama:</p>
-                    
+                    <p class="subtitle">Aturan penting di dalam Lab TIK untuk kenyamanan bersama:</p>
                     <div class="list-box">
-                        <div class="list-item"><i class="fas fa-ban" style="color:#ef4444;"></i> <span style="font-weight:500;">Dilarang membawa makanan/minuman ke Lab.</span></div>
-                        <div class="list-item"><i class="fas fa-desktop" style="color:#10b981;"></i> <span style="font-weight:500;">Gunakan komputer sesuai instruksi guru.</span></div>
-                        <div class="list-item"><i class="fas fa-volume-mute" style="color:#f59e0b;"></i> <span style="font-weight:500;">Jaga ketenangan dan kebersihan meja kerja.</span></div>
-                        <div class="list-item"><i class="fas fa-power-off" style="color:#6366f1;"></i> <span style="font-weight:500;">Matikan komputer & rapikan kursi setelah selesai.</span></div>
+                        <div class="list-item"><i class="fas fa-ban" style="color:#ef4444;"></i> <span style="font-weight:500;">Dilarang membawa makanan/minuman.</span></div>
+                        <div class="list-item"><i class="fas fa-desktop" style="color:#10b981;"></i> <span style="font-weight:500;">Gunakan komputer sesuai instruksi.</span></div>
+                        <div class="list-item"><i class="fas fa-volume-mute" style="color:#f59e0b;"></i> <span style="font-weight:500;">Jaga ketenangan dan kebersihan meja.</span></div>
+                        <div class="list-item"><i class="fas fa-power-off" style="color:#6366f1;"></i> <span style="font-weight:500;">Matikan komputer setelah selesai.</span></div>
                     </div>
                 </div>
                 <div class="image-box float-anim" style="animation-delay: 1.2s;">
-                    <!-- Gambar Kesepakatan Diperbarui -->
-                    <img src="https://i.imghippo.com/files/ppMa8013Lmo.jpg" alt="Kesepakatan Belajar" class="base-image frame-style-7">
+                    <div class="frame-modern-2">
+                        <img src="https://i.imghippo.com/files/ppMa8013Lmo.jpg" alt="Kesepakatan" class="base-image">
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="page" id="page-7">
-            <div class="split-layout reverse mobile-reverse"> <!-- Reverse -->
+            <div class="split-layout reverse"> 
                 <div class="content-box">
                     <h1 class="title">Hubungi <span class="accent-text">Saya</span></h1>
-                    <p class="subtitle">Mari tetap terhubung! Silakan klik ikon di bawah untuk menghubungi saya.</p>
-                    
-                    <!-- Kontak Desain Minimalis Ikonik Sesuai Request -->
+                    <p class="subtitle">Mari tetap terhubung! Silakan klik ikon di bawah ini:</p>
                     <div class="contact-grid">
-                        <a href="https://maps.google.com/?q=Br.+Kacagan+-+Ketewel+-+Sukawati+-+Gianyar" target="_blank" class="contact-link" title="Br. Kacagan - Ketewel - Sukawati - Gianyar">
-                            <i class="fas fa-map-marker-alt"></i> Alamat
-                        </a>
-                        <a href="https://wa.me/6285935163279" target="_blank" class="contact-link" title="0859 3516 3279">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                        <a href="https://instagram.com/andhiasmarahadist" target="_blank" class="contact-link" title="@andhiasmarahadist">
-                            <i class="fab fa-instagram"></i> Instagram
-                        </a>
+                        <a href="https://maps.google.com/?q=Br.+Kacagan+-+Ketewel+-+Sukawati+-+Gianyar" target="_blank" class="contact-link" title="Br. Kacagan - Ketewel - Sukawati - Gianyar"><i class="fas fa-map-marker-alt"></i></a>
+                        <a href="https://wa.me/6285935163279" target="_blank" class="contact-link" title="0859 3516 3279"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://instagram.com/andhiasmarahadist" target="_blank" class="contact-link" title="@andhiasmarahadist"><i class="fab fa-instagram"></i></a>
                     </div>
-                    
-                    <div class="callout">
-                        "Teknologi hanyalah alat. Dalam hal membuat anak-anak bekerja sama dan memotivasi mereka, guru adalah yang paling penting." - <strong>Bill Gates</strong>
-                    </div>
+                    <div class="callout">"Teknologi hanyalah alat. Dalam hal membuat anak-anak bekerja sama dan memotivasi mereka, guru adalah yang paling penting."</div>
                 </div>
                 <div class="image-box float-anim">
-                    <div class="frame-style-8">
+                    <div class="frame-modern-7">
                         <img src="https://i.imghippo.com/files/ga7926C.jpg" alt="Kontak" class="base-image">
                     </div>
                 </div>
