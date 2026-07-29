@@ -79,7 +79,7 @@
         }
         
         .page { display: none; width: 100%; padding: 80px 5%; min-height: 100%; }
-        .page.active { display: block; } /* Diubah ke block agar scroll aman */
+        .page.active { display: block; }
 
         @keyframes fadeUp { 0% { opacity: 0; transform: translateY(80px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes zoomIn { 0% { opacity: 0; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1); } }
@@ -99,9 +99,10 @@
         .anim-5 { animation: rotate3DIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .anim-6 { animation: blurIn 0.8s ease-out forwards; }
         .anim-7 { animation: elasticScale 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .anim-8 { animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; } /* Animasi tambahan untuk halaman baru */
 
         .split-layout {
-            display: flex; width: 100%; max-width: 1300px; /* Lebar maksimal diperbesar */
+            display: flex; width: 100%; max-width: 1300px;
             margin: auto; position: relative; align-items: center; padding-top: 40px;
         }
 
@@ -114,35 +115,27 @@
         .image-box { position: relative; z-index: 10; display: flex; justify-content: center; width: 100%; }
         .base-image { width: 100%; height: auto; display: block; object-fit: cover; }
 
-        /* PENGATURAN LAPTOP: FOTO BESAR & OVERLAP MENYAMPING */
         @media (min-width: 992px) {
             .page.active { display: flex; align-items: center; justify-content: center; } 
             .split-layout { flex-direction: row; gap: 0; }
-            
-            /* Class Reverse untuk memutar posisi kiri-kanan */
             .split-layout.reverse { flex-direction: row-reverse; }
             
-            /* Foto diberi porsi flex lebih besar (1.2) dibanding konten (1) */
             .content-box { flex: 1; }
-            .image-box { flex: 1.2; max-width: 650px; } /* max-width diperbesar signifikan */
+            .image-box { flex: 1.2; max-width: 650px; }
 
-            /* Trik Overlap Laptop: Frame Foto Ditarik Numpuk Ke Kotak Teks */
-            .image-box { margin-left: -120px; } /* Foto numpuk ke kiri */
-            .content-box { padding-right: 150px; padding-left: 50px; } /* Beri ruang agar teks tidak tertutup */
+            .image-box { margin-left: -120px; } 
+            .content-box { padding-right: 150px; padding-left: 50px; }
 
-            /* Balik Overlap jika class 'reverse' */
             .split-layout.reverse .image-box { margin-left: 0; margin-right: -120px; }
             .split-layout.reverse .content-box { padding-right: 50px; padding-left: 150px; }
         }
 
-        /* PENGATURAN HP: FOTO BESAR & OVERLAP ATAS-BAWAH */
         @media (max-width: 991px) {
-            .page { padding: 90px 20px 100px; } /* Matikan flex center, biar bisa scroll bawah */
+            .page { padding: 90px 20px 100px; }
             .split-layout, .split-layout.reverse { flex-direction: column; align-items: center; gap: 0; }
             
-            /* Foto dibuat besar menutupi layar HP */
-            .image-box { max-width: 95%; margin-bottom: -70px; } /* Foto numpuk ke kotak bawah */
-            .content-box { width: 100%; padding: 100px 25px 40px; text-align: center; } /* Ruang atas untuk area numpuk */
+            .image-box { max-width: 95%; margin-bottom: -70px; }
+            .content-box { width: 100%; padding: 100px 25px 40px; text-align: center; }
 
             .nav-btn { top: auto; bottom: 25px; transform: none; width: 50px; height: 50px; }
             .nav-prev { left: 25px; } .nav-next { right: 25px; }
@@ -169,7 +162,6 @@
         .list-item:hover { transform: translateY(-5px); border-color: #e2e8f0; }
         .list-item i { font-size: 1.6rem; color: #4F46E5; width: 35px; text-align: center; }
 
-        /* Kartu Kontak */
         .contact-card-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; width: 100%; }
         .contact-card {
             display: flex; align-items: center; gap: 18px; padding: 16px 20px;
@@ -183,8 +175,7 @@
         .contact-label { font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
         .contact-value { font-size: 1rem; color: #0f172a; font-weight: 700; word-break: break-word; }
 
-        
-        /* 1. Neon Glow Edge */
+        /* Bingkai Estetik */
         .frame-modern-1 {
             padding: 5px; border-radius: 35px; position: relative;
             background: linear-gradient(135deg, #4F46E5, #06b6d4, #c026d3);
@@ -193,7 +184,6 @@
         .frame-modern-1:hover { transform: scale(1.02) translateY(-5px); }
         .frame-modern-1 .base-image { border-radius: 30px; background: white; border: 4px solid white; }
 
-        /* 2. Bento Glassmorphism Plate */
         .frame-modern-2 {
             padding: 15px; background: rgba(255,255,255,0.3); backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.8); border-radius: 35px; 
@@ -201,7 +191,6 @@
         }
         .frame-modern-2 .base-image { border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-        /* 3. Neo-Brutalism Solid Offset */
         .frame-modern-3 {
             border-radius: 20px; border: 4px solid #0f172a;
             box-shadow: 15px 15px 0 #4F46E5; background: white; padding: 8px;
@@ -210,7 +199,6 @@
         .frame-modern-3:hover { box-shadow: 20px 20px 0 #06b6d4; transform: translate(-5px, -5px); }
         .frame-modern-3 .base-image { border-radius: 12px; border: 2px solid #0f172a; }
 
-        /* 4. Cyber-Tech Scanner (Garis Siku) */
         .frame-modern-4 { position: relative; padding: 15px; }
         .frame-modern-4::before, .frame-modern-4::after {
             content: ''; position: absolute; width: 60px; height: 60px; border: 5px solid #4F46E5; border-radius: 8px;
@@ -219,26 +207,23 @@
         .frame-modern-4::after { bottom: 0; right: 0; border-left: none; border-top: none; }
         .frame-modern-4 .base-image { border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
 
-        /* 5. Minimalist Bento Card */
         .frame-modern-5 { 
             padding: 12px; background: white; border-radius: 40px; 
             box-shadow: 0 20px 45px rgba(15,23,42,0.08); border: 1px solid #f1f5f9; 
         }
         .frame-modern-5 .base-image { border-radius: 30px; }
 
-        /* 6. Cyberpunk Clip (Sudut Terpotong) */
         .frame-modern-6-wrapper { filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); }
         .frame-modern-6 { clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%); background: white; padding: 10px; }
         .frame-modern-6 .base-image { clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%); }
 
-        /* 7. Holographic Glow Ring (Statis tapi Bercahaya) */
         .frame-modern-7 {
             padding: 8px; border-radius: 40px;
             background: linear-gradient(135deg, #e2e8f0, #cbd5e1, #ffffff);
             border: 3px solid white; box-shadow: 0 0 40px rgba(79, 70, 229, 0.2);
             position: relative;
         }
-        .frame-modern-7::before { /* Cahaya belakang */
+        .frame-modern-7::before { 
             content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
             background: linear-gradient(45deg, rgba(79, 70, 229, 0.4), rgba(6, 182, 212, 0.4));
             border-radius: 50px; z-index: -1; filter: blur(20px);
@@ -262,6 +247,7 @@
         <a class="nav-item" onclick="navigateTo(5)"><i class="fas fa-laptop-code"></i> Materi</a>
         <a class="nav-item" onclick="navigateTo(6)"><i class="fas fa-handshake"></i> Kesepakatan</a>
         <a class="nav-item" onclick="navigateTo(7)"><i class="fas fa-address-book"></i> Kontak</a>
+        <a class="nav-item" onclick="navigateTo(8)"><i class="fas fa-rocket"></i> Persiapan Awal</a> <!-- Menu Baru Ditambahkan -->
     </nav>
 
     <!-- Tombol Navigasi Geser (Slide Lanjut / Kembali) -->
@@ -286,7 +272,7 @@
             </div>
         </section>
 
-        <!-- Hal 2: Profil (Layout Reverse/Dibalik) -->
+        <!-- Hal 2: Profil -->
         <section class="page" id="page-1">
             <div class="split-layout reverse"> 
                 <div class="image-box">
@@ -303,7 +289,7 @@
             </div>
         </section>
 
-        <!-- Hal 3: Tempat Tanggal Lahir -->
+        <!-- Hal 3: Tempat Tanggal Lahir (Alamat Ditambahkan) -->
         <section class="page" id="page-2">
             <div class="split-layout"> 
                 <div class="image-box">
@@ -313,16 +299,18 @@
                 </div>
                 <div class="content-box">
                     <h1 class="title">Lahir & <span class="accent-text">Asal</span></h1>
-                    <p class="subtitle">Berikut adalah informasi tempat dan tanggal lahir saya.</p>
+                    <p class="subtitle">Berikut adalah informasi tempat dan tanggal lahir serta asal saya.</p>
                     <div class="list-box">
                         <div class="list-item"><i class="fas fa-map-marker-alt"></i><div><strong>Denpasar</strong><br><span style="font-size:0.9rem; color:#64748b;">Tempat Kelahiran</span></div></div>
                         <div class="list-item"><i class="fas fa-calendar-alt"></i><div><strong>2 Juni 1986</strong><br><span style="font-size:0.9rem; color:#64748b;">Tanggal Lahir</span></div></div>
+                        <!-- REVISI: Penambahan Alamat Baru -->
+                        <div class="list-item"><i class="fas fa-home"></i><div><strong>Gang Delod Dalang II no. 1</strong><br><span style="font-size:0.9rem; color:#64748b;">Banjar Kacagan - Ketewel - Sukawati - Gianyar</span></div></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Hal 4: Tugas Utama (Layout Reverse/Dibalik) -->
+        <!-- Hal 4: Tugas Utama -->
         <section class="page" id="page-3">
             <div class="split-layout reverse"> 
                 <div class="image-box">
@@ -360,7 +348,7 @@
             </div>
         </section>
 
-        <!-- Hal 6: Materi 1 Semester (Layout Reverse/Dibalik) -->
+        <!-- Hal 6: Materi 1 Semester -->
         <section class="page" id="page-5">
             <div class="split-layout reverse"> 
                 <div class="image-box">
@@ -381,7 +369,7 @@
             </div>
         </section>
 
-        <!-- Hal 7: Kesepakatan Belajar -->
+        <!-- Hal 7: Kesepakatan Belajar (Teks Direvisi) -->
         <section class="page" id="page-6">
             <div class="split-layout"> 
                 <div class="image-box">
@@ -393,16 +381,17 @@
                     <h1 class="title">Kesepakatan <span class="accent-text">Belajar</span></h1>
                     <p class="subtitle">Mari patuhi aturan Lab TIK demi kenyamanan bersama.</p>
                     <div class="list-box">
-                        <div class="list-item"><i class="fas fa-ban" style="color:#ef4444;"></i> <div>Dilarang membawa makanan & minuman.</div></div>
-                        <div class="list-item"><i class="fas fa-desktop" style="color:#10b981;"></i> <div>Gunakan komputer sesuai instruksi guru.</div></div>
-                        <div class="list-item"><i class="fas fa-volume-mute" style="color:#f59e0b;"></i> <div>Jaga ketenangan, dilarang ribut.</div></div>
-                        <div class="list-item"><i class="fas fa-power-off" style="color:#6366f1;"></i> <div>Matikan komputer & rapikan kursi selesai praktek.</div></div>
+                        <!-- REVISI: Konten Baru Sesuai Permintaan -->
+                        <div class="list-item"><i class="fas fa-clock" style="color:#3b82f6;"></i> <div>Datang Ke Ruang TIK tepat waktu.</div></div>
+                        <div class="list-item"><i class="fas fa-ban" style="color:#ef4444;"></i> <div>Dilarang Membawa Makanan dan Minuman (Kecuali Tumbler air minum).</div></div>
+                        <div class="list-item"><i class="fas fa-chalkboard-teacher" style="color:#10b981;"></i> <div>Perhatikan Instruksi Guru sebelum Menggunakan Komputer.</div></div>
+                        <div class="list-item"><i class="fas fa-broom" style="color:#f59e0b;"></i> <div>Jaga Kebersihan Ruang TIK (Piket pembersihan di akhir pelajaran).</div></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Hal 8: Kontak (Layout Reverse/Dibalik) -->
+        <!-- Hal 8: Kontak -->
         <section class="page" id="page-7">
             <div class="split-layout reverse"> 
                 <div class="image-box">
@@ -440,6 +429,41 @@
                 </div>
             </div>
         </section>
+
+        <!-- Hal 9: Persiapan Awal (HALAMAN BARU) -->
+        <section class="page" id="page-8">
+            <div class="split-layout"> 
+                <div class="image-box">
+                    <div class="frame-modern-5">
+                        <!-- Menggunakan ilustrasi bersih yang relevan dengan pembelajaran/teknologi -->
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=600&h=600" alt="Persiapan Awal" class="base-image">
+                    </div>
+                </div>
+                <div class="content-box">
+                    <h1 class="title">Persiapan <span class="accent-text">Awal</span></h1>
+                    <p class="subtitle">Selesaikan dua langkah penting berikut sebelum kita memulai pembelajaran.</p>
+                    
+                    <div class="contact-card-container">
+                        <!-- Tautan 1: Aktivasi Akun Belajar id -->
+                        <a href="https://mail.google.com" target="_blank" class="contact-card">
+                            <i class="fab fa-google"></i>
+                            <div class="contact-info">
+                                <span class="contact-value" style="font-size: 1.05rem;">1. Aktivasi Akun Belajar Id</span>
+                                <span class="contact-label" style="text-transform: none; font-weight: 500;">Buka halaman mail.google.com</span>
+                            </div>
+                        </a>
+                        <!-- Tautan 2: Google Classroom -->
+                        <a href="https://classroom.google.com" target="_blank" class="contact-card">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <div class="contact-info">
+                                <span class="contact-value" style="font-size: 1.05rem;">2. Gabung ke Google Classroom</span>
+                                <span class="contact-label" style="text-transform: none; font-weight: 500;">Buka halaman classroom.google.com</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script>
@@ -468,9 +492,9 @@
         function navigateTo(pageIndex) {
             if (pageIndex < 0 || pageIndex >= totalPages || pageIndex === currentPage) return;
             
-            // Hapus class active dan HAPUS SEMUA class animasi (anim-0 s/d anim-7) dari semua halaman
+            // Hapus class active dan HAPUS SEMUA class animasi (termasuk anim-8 yang baru ditambahkan)
             pages.forEach(p => {
-                p.classList.remove('active', 'anim-0', 'anim-1', 'anim-2', 'anim-3', 'anim-4', 'anim-5', 'anim-6', 'anim-7');
+                p.classList.remove('active', 'anim-0', 'anim-1', 'anim-2', 'anim-3', 'anim-4', 'anim-5', 'anim-6', 'anim-7', 'anim-8');
             });
             
             // DOM Reflow Trick agar browser "sadar" harus memutar ulang animasi CSS
